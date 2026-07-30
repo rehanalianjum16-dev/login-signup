@@ -62,7 +62,7 @@ export async function POST(request: Request) {
           email: normalizedEmail,
           passwordHash,
           isVerified: false,
-          role: 'USER'
+          role: 'CASHIER'
         }
       });
 
