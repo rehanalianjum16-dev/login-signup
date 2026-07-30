@@ -1,16 +1,10 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 generator client {
   provider = "prisma-client-js"
-}
-
-enum Role {
-  OWNER
-  MANAGER
-  CASHIER
 }
 
 model User {
@@ -19,7 +13,7 @@ model User {
   email             String             @unique
   passwordHash      String
   isVerified        Boolean            @default(false)
-  role              Role               @default(CASHIER)
+  role              String             @default("CASHIER")
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
   refreshTokens     RefreshToken[]
@@ -64,4 +58,3 @@ model LoginAttempt {
   success   Boolean
   timestamp DateTime @default(now())
 }
-

@@ -14,7 +14,8 @@ const signupSchema = z.object({
     .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
     .regex(/[0-9]/, 'Password must contain at least one number')
     .regex(/[^a-zA-Z0-9]/, 'Password must contain at least one special character'),
-  confirmPassword: z.string()
+  confirmPassword: z.string(),
+  role: z.enum(['OWNER', 'MANAGER', 'CASHIER']).optional().default('CASHIER')
 }).refine((data) => data.password === data.confirmPassword, {
   message: 'Passwords do not match',
   path: ['confirmPassword']
@@ -32,7 +33,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, email, password } = result.data;
+    const { name, email, password, role } = result.data;
     const normalizedEmail = email.toLowerCase().trim();
 
     // Check if duplicate user exists
@@ -62,7 +63,7 @@ export async function POST(request: Request) {
           email: normalizedEmail,
           passwordHash,
           isVerified: false,
-          role: 'CASHIER'
+          role: role || 'CASHIER'
         }
       });
 
@@ -79,7 +80,7 @@ export async function POST(request: Request) {
     await sendVerificationEmail(normalizedEmail, verificationTokenVal);
 
     return NextResponse.json(
-      { message: 'User registered successfully. Please check your email to verify your account.' },
+      { message: 'User registered successfully. Please check your email/console to verify your account.' },
       { status: 201 }
     );
   } catch (error) {

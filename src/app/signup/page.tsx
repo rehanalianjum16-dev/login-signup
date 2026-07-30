@@ -7,6 +7,7 @@ export default function SignupPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    role: 'CASHIER',
     password: '',
     confirmPassword: ''
   });
@@ -46,7 +47,7 @@ export default function SignupPage() {
     setStrength(count);
   }, [formData.password]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
@@ -108,10 +109,11 @@ export default function SignupPage() {
           setApiError(data.message || 'An error occurred during registration.');
         }
       } else {
-        setApiSuccess(data.message || 'Signup successful! Please check your email.');
+        setApiSuccess(data.message || 'Signup successful! Please check your email/console for verification.');
         setFormData({
           name: '',
           email: '',
+          role: 'CASHIER',
           password: '',
           confirmPassword: ''
         });
@@ -174,6 +176,23 @@ export default function SignupPage() {
             disabled={loading}
           />
           {errors.email && <span className="criteria-item" style={{ color: 'var(--error)', marginTop: 4 }}>{errors.email}</span>}
+        </div>
+
+        <div className="form-group">
+          <label className="form-label" htmlFor="role">Select Account Role</label>
+          <select
+            className="form-input"
+            id="role"
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            disabled={loading}
+            style={{ background: 'rgba(15, 23, 42, 0.8)', border: '1px solid var(--border-glass)' }}
+          >
+            <option value="CASHIER">Cashier (Standard Access)</option>
+            <option value="MANAGER">Manager (Staff & Stock Access)</option>
+            <option value="OWNER">Owner (Full System Access)</option>
+          </select>
         </div>
 
         <div className="form-group">
