@@ -5,9 +5,8 @@ function page() {
     <div>
       <h1>hello word</h1>
       <div>Assalam o Alaikum</div>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam explicabo repellat deserunt ipsum, illo dolores, laboriosam numquam nesciunt quam quas ipsa, aliquid praesentium odit rem.
-
-      </p>
+<h2>Rehan ali</h2>
+<h5>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque impedit, in sed optio architecto eligendi explicabo.</h5>
     </div>
   )
 }
